@@ -1,0 +1,12 @@
+pat = re.compile(r"""
+		(?P<line>^(									#for each new line
+		(?P<time>\d{2}:\d{2}:\d{2}\.\d{6} \d{9}us)	#match time pattern
+		.+?\s11g\s									#then drop filler
+		(?P<rssi>-?\d+\sdB)							#until rssi pattern shows up
+		\ssignal.+?									#then more filler
+		(?P<bssid>\xhh:{5}\xhh)						#until bssid pattern (MAC address) shows up
+		.+?											#then more filler
+		(?P<source>\xhh:{5}\xhh)					#until source MAC address
+		).+?$										#until end of line
+		)
+	""", re.VERBOSE)
